@@ -47,3 +47,30 @@ const links = document.querySelectorAll('.titles a');
 for(let link of links){
     link.addEventListener('click', titleClickHandler);
 }
+{
+const optArticleSelector = 'post',
+    optTitleSelector = '.post-title',
+    optTitleListSelector = '.titles';
+
+
+function generateTitleLinks() {
+    /*remove content of the title list*/
+    const titleList = document.querySelector(optTitleListSelector);
+    titleList.innerHTML = '';
+}
+    /*for each article */
+
+    /*get the artile id*/
+
+    /*find the title element */
+
+    /* get the title from the title element */
+
+    /*create html from the link */
+
+    /* insert title to the title list*/
+    
+
+generateTitleLinks();
+
+}
