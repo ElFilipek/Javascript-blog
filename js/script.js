@@ -49,8 +49,8 @@ const optArticleSelector = '.post',
   articleAuthorSelector = '.post-author',
   optTagsListSelector = '.tags.list',
   optCloudClassCount = '5',
-  optCloudClassPrefix = 'tag-size-';
-/* optAuthorsListSelector = '.authors .list'; */
+  optCloudClassPrefix = 'tag-size-',
+  optAuthorsListSelector = '.authors';
 
 
 // eslint-disable-next-line no-inner-declarations
@@ -108,7 +108,7 @@ function calculateTagClass(count, params) {
 
   return optCloudClassPrefix + classNumber;
 }
-
+console.log(calculateTagClass);
 generateTitleLinks();
 
 
@@ -155,17 +155,18 @@ function generateTags(){
   /* [NEW] add html from allTags to tagList */
   /*tagList.innerHTML = allTags.join(' '); [old version]*/
   /* [NEW] create variable for all links HTML code */
+  let allTagsHTML = '';
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams:', tagsParams);
-  let allTagsHTML = '';
 
   /* [NEW] START LOOP: for each tag in allTags: */
   for(let tag in allTags){
   /* [NEW] generate code of a link and add it to allTagsHTML */
-    allTagsHTML += tag + ' (' + allTags[tag] + ') ';
-  }
+    const tagLinkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a> (' + allTags[tag] + ') </li>';
+    console.log('tagLinkHTML:', tagLinkHTML);
+    allTagsHTML += tagLinkHTML;
   /* [NEW] END LOOP: for each tag in allTags: */
-
+  }
   /*[NEW] add HTML from allTagsHTML to tagList */
   tagList.innerHTML = allTagsHTML;
 }
@@ -219,6 +220,8 @@ function addClickListenersToTags(){
 addClickListenersToTags();
 
 function generateAuthors(){
+  /* create a new empty object */
+  let allAuthors = {};
   /*find all articles*/
   const allArticles = document.querySelectorAll(optArticleSelector);
   console.log(allArticles);
@@ -231,10 +234,27 @@ function generateAuthors(){
     /*get authors from data-authors attribute*/
     const author = article.getAttribute('data-author');
     /* add generated code to html variable */
-    html = html + ' ' + author;
+    html = author;
     /* insert HTML of all the links into the tags wrapper */
-    authorWrapper.innerHTML = html;
+    authorWrapper.innerHTML = '<a href="#author-' + html + '">' + html + '</a>';
+    /*check */
+    if(!allAuthors[author]){
+      allAuthors[author] = 1;
+    } else {
+      allAuthors[author]++;
+    }
+    /* find authors */
+    const authorsList = document.querySelector(optAuthorsListSelector);
+    /*create new variable*/
+    let allAuthorsHTML = '';
+    /* [NEW] START LOOP */
+    for(let author in allAuthors){
+      allAuthorsHTML += '<li><a href="#author-' + author + '">' + html + '</a> (' + allAuthors[author] + ') </li>';
+    }
+    console.log(authorsList);
+    authorsList.innerHTML = allAuthorsHTML;
   }
+
 }
 generateAuthors();
 
